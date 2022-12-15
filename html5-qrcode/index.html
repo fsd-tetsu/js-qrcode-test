@@ -37,15 +37,15 @@
 	}
 
 	startButton.addEventListener("click", () => {
+		navigator.mediaDevices.getUserMedia({video:true});
 		const scanConfig = { fps: 10, qrbox: 250 };
 		// If you want to prefer front camera
-		reader.textContent = "loading...";
 		html5qrcode.start({ facingMode: "environment" }, scanConfig, onScanSuccess);
 	});
 
 	cancelButton.addEventListener("click", () => {
 		html5qrcode.stop();
-	})
+	});
 
 </script>
 
