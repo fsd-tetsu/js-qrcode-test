@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>qrcode reader</title>
+</head>
+
+<body>
+	<div style="width: 600px; margin: 0 auto;">
+		<button id="qr-reader-start">QRコード読込</button>
+		<button id="qr-reader-cancel">キャンセル</button>
+		<div id="qr-reader" style="width: 500px"></div>
+		<div id="qr-reader-results"></div>
+	</div>
+</body>
+<script src="./html5-qrcode.min.js"></script>
+<script>
+	let startButton = document.querySelector("#qr-reader-start");
+	let cancelButton = document.querySelector("#qr-reader-cancel");
+	let reader = document.querySelector("#qr-reader");
+	let result = document.querySelector("#qr-reader-results");
+
+	let html5qrcode = new Html5Qrcode("qr-reader", {
+		// Use this flag to turn on the feature.
+		experimentalFeatures: {
+			useBarCodeDetectorIfSupported: true
+		}
+	});
+
+	function onScanSuccess(decodedText, decodedResult) {
+		/** Handle success condition. */
+		console.log(decodedText);
+		console.log(decodedResult);
+		result.textContent = decodedText;
+		html5qrcode.stop();
+	}
+
+	startButton.addEventListener("click", () => {
+		const scanConfig = { fps: 10, qrbox: 250 };
+		// If you want to prefer front camera
+		reader.textContent = "loading...";
+		html5qrcode.start({ facingMode: "environment" }, scanConfig, onScanSuccess);
+	});
+
+	cancelButton.addEventListener("click", () => {
+		html5qrcode.stop();
+	})
+
+</script>
+
+</html>
