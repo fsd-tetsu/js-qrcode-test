@@ -32,9 +32,7 @@
 
 	function onScanSuccess(decodedText, decodedResult) {
 		/** Handle success condition. */
-		console.log(decodedText);
-		console.log(decodedResult);
-		result.textContent = decodedResult;
+		result.textContent = JSON.stringify(decodedResult);
 		html5qrcode.stop();
 	}
 
